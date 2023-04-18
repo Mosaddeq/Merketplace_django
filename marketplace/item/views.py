@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from .models import Item # . is used since on the same folder 
 from  django.contrib.auth.decorators import login_required # to makesure user logged in
 
@@ -19,7 +19,15 @@ def detail(request,pk): #since we want to know the detail of specific item, we n
 
 @login_required #if logged in then access this method 
 def new(request):
-    form = NewItemForm() # create NewItemForm
+    if request.method == 'POST':
+        form = NewItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
+            return redirect('item:detail', pk=item.id)
+    else:
+        form = NewItemForm() # create NewItemForm
     
     return render(request, 'item/form.html', {
         'form' : form ,   #  pass in the form 
