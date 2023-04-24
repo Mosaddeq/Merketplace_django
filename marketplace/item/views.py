@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from .models import Item # . is used since on the same folder 
 from  django.contrib.auth.decorators import login_required # to makesure user logged in
 
+
 from .forms import NewItemForm
 
 # Create your views here.
@@ -32,4 +33,5 @@ def new(request):
     return render(request, 'item/form.html', {
         'form' : form ,   #  pass in the form 
         'title': 'New Item', # this will go to the title of the forms.html
-      }) 
+      })
+
