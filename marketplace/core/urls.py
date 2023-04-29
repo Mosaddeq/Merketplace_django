@@ -14,8 +14,9 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('signup/', views.signup, name = 'signup'),
     
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html',authentication_form = LoginForm), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='core/login.html',authentication_form = LoginForm), name='login'),         #unlike traditional method where we define the .html file on views we are defining here 
+
     
     path('logout/', views.logout_view, name = 'logout'),
-        #unlike traditional method where we define the .html file on views we are defining here 
+    path('api/', views.api_index, name = 'api'),
 ]

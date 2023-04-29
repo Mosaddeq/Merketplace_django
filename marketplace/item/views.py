@@ -17,6 +17,7 @@ def detail(request,pk): #since we want to know the detail of specific item, we n
         'item':item,
         'related_items': related_items
     })
+    
 
 @login_required #if logged in then access this method 
 def new(request):
@@ -34,4 +35,6 @@ def new(request):
         'form' : form ,   #  pass in the form 
         'title': 'New Item', # this will go to the title of the forms.html
       })
+    
+    
 

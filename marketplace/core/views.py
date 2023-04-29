@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 from django.contrib.auth import logout
 
@@ -16,6 +17,14 @@ def index(request):
 
         })
 
+
+def api_index(request):
+    items = list(Item.objects.filter(is_sold=False).values())
+    categories = list(Category.objects.values())
+    return JsonResponse({
+        'categories': categories,
+        'items': items,
+    })
 
 def contact(request):
         return render(request, 'core/contact.html' ) 
