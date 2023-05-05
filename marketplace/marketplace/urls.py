@@ -26,6 +26,8 @@ urlpatterns = [
     path('',include('core.urls')),
     
     path('admin/', admin.site.urls),
+    
+    path('dashboard/', include('dashboard.urls')),
 
     path('items/', include('item.urls')),  #this points to the urls.py we created in item all urls that start with item will automatically
                                             #refer to urls,py(item) andif there is a path with primary key there"""
