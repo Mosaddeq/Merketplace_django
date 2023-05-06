@@ -3,7 +3,7 @@ from .models import Item # . is used since on the same folder
 from  django.contrib.auth.decorators import login_required # to makesure user logged in
 
 
-from .forms import NewItemForm
+from .forms import NewItemForm,EditItemForm
 
 # Create your views here.
 
@@ -36,5 +36,25 @@ def new(request):
         'title': 'New Item', # this will go to the title of the forms.html
       })
     
-    
+@login_required
+def delete(request, pk):
+    item = get_object_or_404(Item, pk=pk,created_by=request.user)
+    item.delete()
+    return  redirect('dashboard:index')
 
+@login_required #if logged in then access this method 
+def edit(request, pk):
+    item = get_object_or_404(Item, pk=pk,created_by=request.user)
+    if request.method == 'POST':
+        form = EditItemForm(request.POST, request.FILES,instance=item) #instance of the forms.html
+        if form.is_valid():
+            form.save
+            
+            return redirect('item:detail', pk=item.id)
+    else:
+        form = EditItemForm(instance=item) # from wll be insitially empty if we dont pass in some data hence instance = item
+    
+    return render(request, 'item/form.html', {
+        'form' : form ,   #  pass in the form 
+        'title': 'Edit Item', # this will go to the title of the forms.html
+      })
