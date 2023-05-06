@@ -42,19 +42,23 @@ def delete(request, pk):
     item.delete()
     return  redirect('dashboard:index')
 
-@login_required #if logged in then access this method 
 def edit(request, pk):
-    item = get_object_or_404(Item, pk=pk,created_by=request.user)
+    item = get_object_or_404(Item, pk=pk, created_by=request.user)
     if request.method == 'POST':
-        form = EditItemForm(request.POST, request.FILES,instance=item) #instance of the forms.html
+        form = EditItemForm(request.POST, request.FILES, instance=item)
         if form.is_valid():
-            form.save
-            
+            # Save the form and redirect
+            item = form.save(commit=False)
+            item.created_by = request.user
+            item.save()
             return redirect('item:detail', pk=item.id)
+        else:
+            # Print form errors
+            print(form.errors)
     else:
-        form = EditItemForm(instance=item) # from wll be insitially empty if we dont pass in some data hence instance = item
+        form = EditItemForm(instance=item)
     
     return render(request, 'item/form.html', {
-        'form' : form ,   #  pass in the form 
-        'title': 'Edit Item', # this will go to the title of the forms.html
-      })
+        'form': form,
+        'title': 'Edit Item',
+    })
