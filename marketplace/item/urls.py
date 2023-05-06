@@ -5,17 +5,12 @@ from . import views   #to get all the views.py(item) content
 app_name = 'item' #name space for this app
 
 urlpatterns = [
-    path('<int:pk>/', views.detail, name = 'detail'),
+    # other URL patterns
     
-    path('new/', views.new, name = 'new'),
-    
-    path('<int:pk>/edit', views.edit, name = 'edit'),
-    
-    path('<int:pk>/delete', views.delete, name = 'delete'),
-    
-    
-    
-    #path('', views.items, name='items'),
+    path('items/<int:pk>/', views.detail, name='detail'),
+    path('items/new/', views.new, name='new'),
+    path('items/<int:pk>/edit/', views.edit, name='edit'),
+    path('items/<int:pk>/delete/', views.delete, name='delete'),
 ]
 
 """<int:pk>/ when this has an integer primarykey we want to use views.detail
