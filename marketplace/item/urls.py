@@ -22,4 +22,4 @@ Therefore, we had to place     path('new/', views.new, name = 'new'), before    
 
 """
 
- 
+"""path('items/<int:pk>/edit/',this pattern was useful to solve the problem"""
