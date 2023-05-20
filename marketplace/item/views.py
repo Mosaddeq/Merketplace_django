@@ -62,3 +62,16 @@ def edit(request, pk):
         'form': form,
         'title': 'Edit Item',
     })
+    
+def items(request):
+    query = request.GET.get('query', '')
+    items = Item.objects.filter(is_sold=False)
+    
+    if query: #if there the any query
+        items = items.filter(name__icontains=query) #if name contains any query (insensitive)
+    
+    return  render(request, 'item/items.html',{
+        'items': items,
+        'query': query,
+        
+    })

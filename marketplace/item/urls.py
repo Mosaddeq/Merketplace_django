@@ -6,7 +6,7 @@ app_name = 'item' #name space for this app
 
 urlpatterns = [
     # other URL patterns
-    
+    path('', views.items, name='items'),
     path('items/<int:pk>/', views.detail, name='detail'),
     path('items/new/', views.new, name='new'),
     path('items/<int:pk>/edit/', views.edit, name='edit'),
